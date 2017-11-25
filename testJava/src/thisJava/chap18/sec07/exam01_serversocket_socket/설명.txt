@@ -1,0 +1,22 @@
+
+ServerExample.java 의
+
+Socket socket = serverSocket.accept();  // 클라이언트 연결 수락
+
+일 때
+
+------------------------------------------------------------
+
+...
+
+"main" #1 prio=5 os_prio=0 tid=0x00000000030c0800 nid=0x1534 runnable [0x00000000030bf000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.DualStackPlainSocketImpl.accept0(Native Method)
+        at java.net.DualStackPlainSocketImpl.socketAccept(DualStackPlainSocketImpl.java:131)
+        at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:404)
+        at java.net.PlainSocketImpl.accept(PlainSocketImpl.java:199)
+        - locked <0x00000000d5e57300> (a java.net.SocksSocketImpl)
+        at java.net.ServerSocket.implAccept(ServerSocket.java:545)
+        at java.net.ServerSocket.accept(ServerSocket.java:513)
+        at thisJava.chap18.sec07.exam01_serversocket_socket.ServerExample.main(ServerExample.java:16)
+

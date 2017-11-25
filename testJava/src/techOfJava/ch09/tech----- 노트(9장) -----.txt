@@ -1,0 +1,230 @@
+
+9장
+
+용어들
+ 태스크(task)
+ 프로세스
+ 멀티 태스킹
+ 병행 처리
+ 
+태스크(Task)는 일 혹은 작업이라고 하며, 프로세스와 스레드까지 의미한다.
+
+프로세스(Process)는 OS 로 부터 자원을 할당받아 동작하는 독립된 프로그램을 의미한다.
+
+스레드(Thread)는 하나의 프로세스에서 실행하는 작업의 단위다.
+
+멀티 태스킹, 멀티 프로세싱 그리고 멀티 스레딩
+ 멀티 태스킹은 여러 개의 태스크 즉 일을 병렬 처리하는 것을 의미한다.
+ OS 가 스케줄링을 거쳐 컴퓨터의 자원을 여러 개의 태스크에게 할당해주는 것을 의미..
+ 
+ 멀티 프로세싱은 여러 개의 CPU 프로세스가 서로 협력하여 작업을 병행처리하는 기법이다.
+ 각 CPU 프로세스들은 독립적이므로 하나 혹은 여러 대의 컴퓨터에서 분산 처리될 수 
+ 있다는 장점이 있다.
+ 
+----------
+[스레드 생성을 위한 Thread 클래스와 Runnable 인터페이스]
+
+ThreadSample2
+    -> Thread 클래스를 상속
+ThreadSample2
+    -> Runnable 인터페이스를 구현
+    
+자바는 단일 상속만 가능하므로 Thread 클래스를 상속한 경우 확장성이 떨어진다.
+반면, Runnable 인터페이스를 구현한 경우 다형성 측면에서 유리하다. 
+즉,  재활용 및 확장에 유리하다. (따라서 일반적인 경우 Runnable 권장)
+
+----------
+run() 메소드와 start() 메소드의 실행 흐름
+
+run 은 일반 메소드와 동일 : 자신이 완료되어야 다음 라인이 실행
+
+ThreadSample4
+    -> start() 
+ThreadSample5
+    -> run()
+    
+----------------------------------------
+
+[스레드 클래스와 생성자] 
+
+사용법 : 
+    Thread [스레드 이름] = new Thread()
+    Thread [스레드 이름] = new Thread([Runnable 구현 객체])
+    Thread [스레드 이름] = new Thread([ThreadGroup 객체],[Runnable 구현 객체])
+    Thread [스레드 이름] = new Thread([String 스레드 이름])
+    Thread [스레드 이름] = new Thread([ThreadGroup 객체],[String 스레드 이름])
+    Thread [스레드 이름] = new Thread([Runnable 구현 객체],[String 스레드 이름])
+    Thread [스레드 이름] = new Thread([ThreadGroup 객체],[Runnable 구현 객체],[String 스레드 이름])    
+    Thread [스레드 이름] = new Thread([ThreadGroup 객체],[Runnable 구현 객체],[String 스레드 이름],[long 스택 크기])  
+    
+스레드는 스레드 그룹에 속함
+어떠한 스레드를 생성하지 않더라도 프로세스 실행 시 main 스레드가 생성된다
+또한 이 스레드가 속하는 main 스레드 그룹이 존재한다.
+
+----------
+
+ThreadSample7
+    -> Thread 의 init() 메소드 매개변수 1 : ThreadGroup g
+    
+스레드 상태 1 : Create
+    Thread 객체를 인스턴스했을 때의 상태.
+    start() 메소드가 아직 호출되기 전
+스레드 상태 2 : Runnable
+    start() 메소드가 호출되었을 때의 상태
+    보통 실행 가능한 상태라고...
+스레드 상태 3 : Running 
+    스레드 객체가 실제로 동작을 하는 단계.
+    스케줄러가 스레드 풀에서 실행시킬 목적으로 객체를 뽑는 경우
+    -> Running 상태로 변경되며 run() 메소드가 실행된다
+스레드 상태 4 : Waiting, Blocked
+    대기하고 있는 상태. 실제 동작하고 있지 않는 상태이며
+    notify() 메소드에 의해서 다시 깨어날 수 있다
+스레드 상태 5 : Done
+    run() 메소드가 그 역할을 다 했을 때 스레드 객체는 종료
+
+----------
+
+스레드 스케줄러가 하는 일
+    스레드를 관리하는 프로세스
+    스케줄러가 스케줄링하는 방법은 스레드의 상태를 관리할 수 있기 때문
+    Runnable -> Running 으로 바꾸어 동작하게...
+
+    
+----------
+
+스레드 우선 순위와 실행 시간
+    우선 순위를 조정하여 스레드가 얻는 실행 시간을 조정할 수 있다
+    우선 순위는 1 ~ 10 까지 설정 가능, 값이 높을 수록 우선순위는 높아짐
+
+ThreadSample9
+    -> cpu 점유 시간을 늘리기 위해 임시로 작업 지연 코드 들어감
+ThreadSample10
+    -> sleep 사용 (할 것)
+
+----------------------------------------
+스레드 강제 종료
+
+TerminateSample1.java
+    -> Ctrl + C 입력하면 JVM 은 System.exit() 메소드를 실행하여 프로그램이 종료
+TerminateSample2.java
+    -> Ctrl + C 입력된 후 현재 실행 중인 스레드가 작업을 완료한 후 종료시키는 방법
+    
+
+--------------------
+[인터럽트가 발생했을 경우]
+
+ThreadSample11.java
+
+ThreadSample12.java
+    -> 인터럽트가 발생했을 때 스레드가 정상 종료하도록 구현
+
+--------------------
+[데몬 스레드]
+
+DaemonThread.java
+    JVM 은 모든 스레드가 종료될 때 까지 종료되지 않는다
+    가령 가비지 컬렉터 같이 백그라운드에서 주기적으로 동작하는 작업이 있는 이상
+    -> main 스레드가 종료해도 JVM 은 종료되지 않음(강제 종료 제외)
+    
+    해당 스레드를 데몬으로 설정하면 이러한 문제 해결
+    setDaemon() 으로 해당 스레드를 데몬으로 설정할 수 있음
+    -> 이렇게 데몬으로 설정된 스레드는 모든 스레드가 종료해야 
+    JVM 이 종료된다는 조건에서 제외
+    
+    데몬 스레드는 주로 프로그램이 실행되는 동안 백그라운드에서
+    동작하는 서비스를 제공하기 위해 사용
+
+----------------------------------------
+
+[스레드 그룹으로 스레드 한번에 제어하기] 
+
+사용법 : 
+    ThreadGroup [객체 이름] = new ThreadGroup([String 이름])
+    ThreadGroup [객체 이름] = new ThreadGroup([ThreadGroup 부모].[String 이름])
+
+ThreadGroupSample1.java
+    -> jobGroup 의 setMaxPriority() 메소드에 의해서 하위 스레드 값의 최대 우선순위가 결정
+ThreadGroupSample2.java
+    -> interrupt()
+ThreadGroupSample3.java
+    -> enumerate()   
+    
+    
+----------------------------------------
+
+[스레드 동기화] 
+
+ConcurrentSample1.java
+    -> 공유자원을 동시에 사용할 경우 발생하는 문제
+
+해결책 : 동기화
+    동기화는 오직 하나의 스레드만이 공유 자원에 대한 접근을 허락한다.
+    자바 동기화에 필요한 것은 synchronized 구문과 스레드 락(Lock) 이다.
+    락 객체는 문지기 역할을 해서 오직 하나의 스레드만이 동기화 블록에 접근할 수 있다.    
+    
+사용법 : 
+    // 메소드에 키워드를 선언하는 방법 : 동기화 메소드
+    [제어자] synchronized [반환값][메소드 이름]() { // 공유자원 변경 }
+    
+    // 메소드 내부에 키워드를 선언하는 방법 : 동기화 블록
+    [메소드 선언부]
+    {
+        synchronized ( [락 객체] ) {
+            // 공유자원 변경
+        }
+    }
+ 
+ConcurrentSample2.java
+    -> 동기화 보장 예제
+
+
+은행서비스 구현 예제
+
+Bank.java
+    -> 동기화 구현
+
+서로 다른 락을 사용할 경우
+    public class BankSample1 {
+        private Object lock1 = new Object();
+        private Object lock2 = new Object();
+        
+        ...
+        
+        public void deposit(int money) {
+            synchronized (lock1) {
+                // 입금
+            }
+        }
+        public void withdraw(int money) {
+            synchronized (lock2) {
+                // 출금
+            }
+        }        
+    }   
+    ==> 만약 deposit 메소드와 withdraw 메소드가 동시에 실행될 경우
+    데이터의 무결성이 유지되지 않는 오류가 발생할 여지 있음
+
+ 
+ConcurrentSample6.java
+    -> 동기화의 부작용 : 병목현상
+전체가 동기화 구문으로 지정되면
+불필요하게 포함되는 부분 -> 속도 저하
+
+ConcurrentSample7.java
+    -> 개선 버전
+
+
+----------------------------------------
+폴링과 인터럽트 방식 구현하기
+
+--------------------
+Producer-Consumer 패턴
+프로듀서(Producer) : 처리해야 할 작업이나 데이터를 지속적으로 생성하는 역할을 담당
+작업 Queue : Queue는 자료구조에서 FIFO(First in First out) 으로 구현된 형태,
+    작업을 관리하는 역할
+컨슈머(Consumer) : 어떤것을 소비하는 역할
+    처리할 작업은 반드시 작업 Queue 에서 할당 받아야 함
+
+
+
+      

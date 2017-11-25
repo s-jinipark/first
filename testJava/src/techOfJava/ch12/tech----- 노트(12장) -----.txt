@@ -1,0 +1,69 @@
+
+12장
+
+제네릭 기법으로 클래스 디자인하기
+ 제네릭(Generic) 의 사전적 의미는
+ '포괄적인, 통칭의' 라는 뜻
+ <정의>
+ "제네릭은 클래스 내부에서 사용할 타입을 외부에서 지정하는 기법을 의미한다"
+ 
+
+ArrayList 클래스가 저장할 데이터 형(클래스형)을 
+ArrayList 클래스 내부에서 '어떤형의 데이터를 받겠다' 가 아닌 
+ArrayList 를 사용하는 외부에서 '어떤형의 데이터를 사용하겠다' 고 설정
+
+예)
+ArrayList<String> strList = new ArrayList<String>();
+ArrayList<Integer> intList = new ArrayList<Integer>();
+ArrayList<Double> doubleList = new ArrayList<Double>();
+
+
+----------
+[제네릭의 특징]
+
+ 1) 클래스 내부에서 사용하는 형(Type) 을 다이아몬드 지시자로 받을 수 있다
+ 2) 명확하지 않는 형 변환 과정을 생략할 수 있다
+ 3) 하나의 클래스로 다양하게 처리할 수 있다
+
+
+
+GenericSample1.java
+    -> 
+ Exception in thread "main" java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Integer
+    at techOfJava.ch12.GenericSample1.main(GenericSample1.java:11)
+
+GenericSample2.java
+    -> 정상 실행
+
+    
+----------------------------------------
+
+와일드 카드와 다이아몬드 지시자로
+제네릭 클래스 만들기
+
+사용법 : 
+    1. 제네릭 클래스가 1개의 클래스 타입을 받는 경우
+    [클래스형]<[타입 매개변수]>[객체이름] = new [클래스형]<[타입 매개변수]>();
+    2. 제네릭 클래스가 2개의 클래스 타입을 받는 경우
+    [클래스형]<[타입 매개변수],[타입 매개변수]>[객체이름] 
+        = new [클래스형]<[타입 매개변수],[타입 매개변수]>();
+    
+
+와일드 카드 문자들
+와일드 카드      의미              설명
+E               'E'lement       보통 Iterater<E> 같은 클래스에서...
+K               'K'ey           키로 사용될 때, 보통 V 키워드와 같이 사용
+V               'V'alue
+T               'T'ype
+N               'N'umber        Integer나 Double 같은 숫자를 감싸는 래퍼 클래스를 의미할 때
+?               -               ? 는 모든 클래스를 의미
+                                선언부에 다이아몬드 지시자로 사용 X
+                                확장 문법에서 사용 할 수 O
+S,U             -               중복된 와일드 카드 문자 선언을 피하기 위해
+                                추가적으로 사용할 수 있는 와일드 카드 문자
+  
+----------
+
+
+
+
