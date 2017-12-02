@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<devon>
+    <core>
+        <src>#home/conf/devon-core.xml</src>
+    </core>
+    <framework>
+        <src>#home/conf/products/devon-framework.xml</src>
+    </framework>
+</devon>

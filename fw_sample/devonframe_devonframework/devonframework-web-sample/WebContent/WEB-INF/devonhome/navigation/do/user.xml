@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation>
+
+    <action name="retrieveUserList">
+        <command>devonframework.sample.office.user.command.RetrieveUserListCmd</command>
+        <return>/jsp/user_vo_form.jsp</return>
+    </action>
+    
+    <action name="retrieveUserAjaxPage">
+        <return>/jsp/user_vo_ajax.jsp</return>
+    </action>
+
+</navigation>

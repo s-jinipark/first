@@ -1,0 +1,140 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ include file="/jsp/common/base.jsp"%>
+<jsp:useBean id="resultList" class="devon.core.collection.LMultiData" scope="request" />
+
+
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LG CNS DevOn Framework</title>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resource/css/BX_style.css'/>" />
+<script type="text/javascript" src="<c:url value='/resource/addon/jquery/js/jquery-1.11.2.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resource/js/BX_js_common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resource/addon/jquery/js/jquery.accordion.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resource/addon/datatables/jquery.dataTables.min_customized.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resource/js/BX_js_datatable.js'/>"></script>
+
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="<c:url value='/resource/addon/html5shiv-master/dist/html5shiv.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resource/addon/html5shiv-master/dist/html5shiv-printshiv.min.js'/>"></script>
+<![endif]-->
+<script type="text/javascript">
+	$(window).ready(function () {
+		$('.page-navigation a').click(function () {
+			$('.page-navigation a').removeClass('active');
+			$(this).addClass('active');
+		});
+		$('.topMenu a').click(function () {
+			$('.topMenu a').removeClass();
+			$(this).addClass('active');
+			var topMenu = $(this).text();
+				$('.titleD1').text(topMenu);
+		});
+		$("#searchBtn").on("click", function(e) {
+			document.searchForm.action = "<c:url value="/user/retrieveUserList.do"/>";
+			document.searchForm.submit();
+		});
+	});
+	
+</script>
+</head>
+<body class="frameBody">
+	<!-- page-container start -->
+    <div class="page-container secondP">
+    	<!-- page-head start -->
+		<header class="page-head">
+        	<a class="leftCon" href="#"><img src="<c:url value='/resource/images/ico_leftCon.png" alt="Left Navigation Control'/>" /></a>
+            <div class="topMenu">
+            	<ul>
+					<li><a href="<c:url value='/main.do' />">메인</a></li>
+                </ul>
+            </div>
+            <ul>
+            	<li class="topUser">
+                	<img src="<c:url value='/resource/images/noPhoto.png" alt="No Photo now'/>" />
+                    <h2>Gildong Hong</h2>
+                    <span>LG CNS</span>
+				</li>
+            </ul>
+        </header>
+        <!-- //page-head end -->
+        <!-- page-left start -->
+		<nav class="page-left leftOpen">
+        	<div class="sysLogo">
+            	<a href="<c:url value='/main.do' />" >
+                	<img src="<c:url value='/resource/images/sysLogo2.png" alt="LG CNS Smart Solution'/>" />
+                </a>
+            </div>
+        	<div class="page-navigation">
+            	<section class="titleD1">DevOn Framework</section>
+            	<section id="leftNav" data-accordion-group>
+                    <a class="depth1 hasNoChild" href="<c:url value='/employee/retrieveEmployeeList.do' />" ><div>사원정보조회(VO, Form)</div></a>
+                    <a class="depth1 hasNoChild" href="<c:url value='/employee/retrieveEmployeeAjaxPage.do' />"><div>사원정보조회(VO, Ajax)</div></a>
+					<a class="depth1 hasNoChild" href="<c:url value='/user/retrieveUserList.do' />" ><div class="active">사용자정보조회(VO, Form)</div></a>
+					<a class="depth1 hasNoChild" href="<c:url value='/user/retrieveUserAjaxPage.do' />" ><div>사용자정보조회(VO, Ajax)</div></a>
+				</section>
+        	</div>
+		</nav>
+		<!-- //page-left end -->
+        
+        <!-- page-content start -->
+		<section class="page-content container-fluid" >
+			<div style="overflow-y: auto; max-height:600px; padding:20px;">
+				<article class="widget">
+			    	<div class="widget-title">
+			            <h2>사용자정보조회(VO, Form)</h2>
+			        </div>
+			    </article>
+			    <article class="widget">
+				    <div class="widget-content">
+				        <div class="search search-single">
+				            <div class="search-content">
+				                <fieldset>
+				                    <div class="row">
+				                        <span class="searchBtn pull-right"><button type="button" id="searchBtn">조회</button></span>
+				                    </div>
+				                </fieldset>
+				            </div>
+				        </div>
+				    </div>
+				</article>
+				<article class="widget">
+					<div class="widget-content listTable">
+	                <table class="table">
+	                    <thead>
+	                        <tr>
+	                            <th>사용자 아이디</th>
+	                            <th>이름</th>
+	                            <th>역할</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="employeeArea">
+	                   		<%for(int idx = 0, iMax = resultList.getDataCount(); idx < iMax; idx++) {
+                    		%>
+                    			<tr>
+	                    			<td><%=resultList.get("usrid", idx) %></td>
+	                                <td><%=resultList.get("usrnm", idx) %></td>
+	                                <td><%=resultList.get("rolenm", idx) %></td>
+                    			</tr>
+                    		<%
+	                    	}
+	                    	%>
+	                    </tbody>
+	                </table>
+				    </div>
+				</article>
+			</div>
+		</section>
+        <!-- //page-content end -->
+    </div>
+    <!-- //page-container end -->
+    <!-- form -->
+    <form name="searchForm" id="searchForm" method="post" onsubmit="return false;">
+    </form>
+</body>
+</html>

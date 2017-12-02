@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+/*Copyright ©2015 LG CNS, All Rights Reserved.*/
+
+/* HTML(Common) Elements
+---------------------------------------------------------*/
+.align-right {
+	text-align : right !important;
+}
+.align-center {
+    text-align : center  !important;
+}
+.align-left {
+    text-align : left  !important;
+}
+.color-red {
+	color: red  !important;
+}
+.color-blue {
+    color: blue  !important;
+}
+.col-xs-4 {
+	width : 32.333333%;
+}
+
+.not_ready, .ready {display:inline-block; width:16px; height:16px; background:url("../images/red.png") no-repeat; vertical-align:middle;}
+.ready {background:url("../images/green.png") no-repeat;}
+.not_ready {background:url("../images/red.png") no-repeat;}

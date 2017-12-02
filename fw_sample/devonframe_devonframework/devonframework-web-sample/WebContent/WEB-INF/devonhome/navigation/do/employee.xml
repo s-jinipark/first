@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation>
+
+    <action name="retrieveEmployeeList">
+        <command>devonframework.sample.office.employee.command.RetrieveEmployeeListCmd</command>
+        <return>/jsp/employee_vo_form.jsp</return>
+    </action>
+    
+    <action name="retrieveEmployeeAjaxPage">
+        <return>/jsp/employee_vo_ajax.jsp</return>
+    </action>
+
+</navigation>
