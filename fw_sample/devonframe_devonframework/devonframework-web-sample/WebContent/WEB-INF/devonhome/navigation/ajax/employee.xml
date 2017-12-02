@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<navigation>
-	<action name="retrieveEmployeeList">
-		<command>devonframework.sample.office.employee.command.RetrieveEmployeeListAjaxCmd</command>
-		<return handler="null" />
-	</action>
-</navigation>
